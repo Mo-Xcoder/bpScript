@@ -1,15 +1,27 @@
 !comment test
+include secondary;
 
 class Main()
-{
+{   
 
-    etch Main(){
-        PrintStuff('my test');
+    etch Start()
+    {
+        reference.test = 2;
     }
 
-    etch PrintStuff(statement)
+    etch Main()
+    {
+        print("test:" + str(reference.test));
+        reference.PrintStuff("my test");
+        printer = Printer("testing text");
+        printer.Print();
+    }
+
+    etch PrintStuff(statement:str)
     {
         print(statement);
+        test = 2;
+        
     }
 }
 

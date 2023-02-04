@@ -1,0 +1,25 @@
+{
+  "name": "blueprintscript-support",
+  "displayName": "BlueprintScript Support",
+  "description": "Syntax highlighting for BpScript",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "blueprintscript",
+      "aliases": ["BlueprintScript", "blueprintscript"],
+      "extensions": [".bps"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "blueprintscript",
+      "scopeName": "source.bps",
+      "path": "./syntaxes/blueprintscript.tmLanguage.json"
+    }]
+  }
+}

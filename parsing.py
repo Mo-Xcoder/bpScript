@@ -10,12 +10,14 @@ class Parser:
 
     def parse(self, code: str) -> str:
         # Parse code into normal python
+        code = self.parse_imports(code)
         code = self.parse_comment(code)
         code = self.parse_key_words(code)
         code = self.parse_end_of_line(code)
         code = self.parse_syntax_braces(code)
         code = self.parse_funcs(code)
         code = self.cleanup(code)
+        code = self.entrypoint(code)
         # Dump the generated code to a file
         with open('output.py', 'w') as f:
             f.write(code)
@@ -49,12 +51,49 @@ class Parser:
             else:
                 return True
 
+    def parse_imports(self, code: str) -> str:
+        includeName = ""
+        for line in code.splitlines():
+            words = line.split()
+            for wordNo, word in enumerate(words):
+                if words[wordNo] == "from" and not self.InString(words[wordNo], line):
+                    if words[wordNo + 1]== "native":
+                        if words[wordNo + 2] == "import":
+                            words[wordNo] = f"from {words[wordNo + 3]} import *"
+        for line in code.splitlines():
+            words = line.split()
+            for wordNo, word in enumerate(words):
+                if word == "include" and not self.InString(word, line):
+                    includeName = words[wordNo + 1]
+                    code = code.replace(line, "")
+                    with open(includeName.removesuffix(";") + ".bps", "r") as file:
+                        code = file.read() + "\n" + code
+        for line in code.splitlines():
+            if "from native import " in line:
+                if self.InString("from native import ", line, True):
+                    continue
+                code = code.replace(line, line.replace("from native import ", "import "))
+                words = line.split()
+                newLine = ""
+                for wordNo, word in enumerate(words):
+                    if words[wordNo] == "from" and not self.InString(words[wordNo], line):
+                        if words[wordNo + 1] == "native":
+                            if words[wordNo + 2] == "import":
+                                words[wordNo] = "import"
+                                words[wordNo] = ""
+                                words[wordNo + 2] = ""
+                                newLine = " ".join(words)
+                if newLine != "":
+                    code = code.replace(line, newLine)
+
+        return code
+
     def parse_end_of_line(self, code: str) -> str:
         code = "".join([s for s in code.splitlines(True) if s.strip("\r\n")])
 
         for line in code.splitlines():
             skipLine = False
-            for token in ("etch", "while", "for", "if", "else", "elif", "with", "from"):
+            for token in ("etch", "while", "for", "if", "else", "elif", "with", "from", "but"):
                 if token in line and not self.InString(token, line):
                     skipLine = True
             if ''.join(line.split()).startswith(("{", "}", "\n", "class")):
@@ -103,7 +142,7 @@ class Parser:
 
     def parse_key_words(self, code: str) -> str:
         for line in code.splitlines():
-            if "this" in line and not self.InString("reference", line):
+            if "reference" in line and not self.InString("reference", line):
                 code = code.replace(line, line.replace("reference", "self"))
         for line in code.splitlines():
             if "true" in line and not self.InString("true", line):

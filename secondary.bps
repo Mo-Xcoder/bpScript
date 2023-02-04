@@ -1,0 +1,14 @@
+!secondary class
+from native import sys;
+class Printer()
+{
+    etch Start(text)
+    {
+        reference.text = text;
+    }
+
+    etch Print()
+    {
+        print(reference.text);
+    }
+}
