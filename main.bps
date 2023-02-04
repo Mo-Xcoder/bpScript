@@ -1,0 +1,16 @@
+!comment test
+
+class Main()
+{
+
+    etch Main(){
+        PrintStuff('my test');
+    }
+
+    etch PrintStuff(statement)
+    {
+        print(statement);
+    }
+}
+
+
