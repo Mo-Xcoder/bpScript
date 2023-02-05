@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <schema path="/io/elementary/appcenter/settings/" id="io.elementary.appcenter.settings">
+    <key name="window-maximized" type="b">
+      <default>false</default>
+      <summary>Whether the window was maximized on last run</summary>
+      <description>Whether the window was maximized on last run</description>
+    </key>
+    <key name="window-position" type="(ii)">
+      <default>(-1, -1)</default>
+      <summary>Window position</summary>
+      <description>Most recent window position (x, y)</description>
+    </key>
+    <key name="window-size" type="(ii)">
+      <default>(1100, 660)</default>
+      <summary>Most recent window size</summary>
+      <description>Most recent window size (width, height)</description>
+    </key>
+    <key type="b" name="developer-mode">
+      <default>false</default>
+      <summary>The user is a developer</summary>
+      <description>Mode that allows the user to see more packages with development purposes</description>
+    </key>
+    <key type="as" name="paid-apps">
+      <default>[]</default>
+      <summary>List of paid-for applications</summary>
+      <description>A list of appstream IDs which have been paid for</description>
+    </key>
+    <key type="as" name="cached-drivers">
+      <default>[]</default>
+      <summary>List of package names of drivers that may be required</summary>
+      <description>Speeds up loading of updates view by remembering which drivers may be required</description>
+    </key>
+    <key type="b" name="content-warning">
+      <default>false</default>
+      <summary>Display content warning for explicit apps</summary>
+      <description>Whether to display a warning dialog when attempting to install apps that are explicit according to their OARS data</description>
+    </key>
+    <key type="b" name="non-curated-warning">
+      <default>false</default>
+      <summary>Display warning for non-curated apps</summary>
+      <description>Whether to display a warning dialog when attempting to install apps are not from a curated source</description>
+    </key>
+    <key type="x" name="last-refresh-time">
+      <default>0</default>
+      <summary>Unix UTC time of last cache refresh</summary>
+      <description>Used to determine when AppCenter last refreshed its caches and checked for package updates</description>
+    </key>
+    <key type="b" name="automatic-updates">
+      <default>false</default>
+      <summary>Automatic updates</summary>
+      <description>Whether to automatically install updates to curated Flatpak apps</description>
+    </key>
+  </schema>
+</schemalist>
